@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -30,37 +31,48 @@ public class Main {
         }
         
         File newDirectory = new File(dirName);
+        
+        HashMap<Integer,String> hashmap = new HashMap<Integer,String>();
 
         if (!newDirectory.isDirectory()){
             System.out.println("Directory does not exist. Please run Java program with argument for file directory again");
         }else{
             for (File directories: newDirectory.listFiles()){
+
                 if (directories.isDirectory()){
                     for (File file: directories.listFiles()){
-                        FileReader fr = new FileReader(dirName+ File.separator + directories.toString() + File.separator + file);
+                        System.out.println(file);
+                        FileReader fr = new FileReader(file);
                         BufferedReader br = new BufferedReader(fr);
 
-                        List <String> lineArray = new ArrayList<>();
+                        List<String> lineArray = new ArrayList<>();
                         List<String> wordList = new ArrayList<>();
                         String[] lineList;
                         String line = "";
+                        String wordListString ="";
+                        String[] wordListArray;
                         
+                        // replace all punctuations and split
                         while (null!=(line=br.readLine())){
-                            lineList = line.toLowerCase().trim().replaceAll(","," ").split(" ");
+                            lineList = line.toLowerCase().trim().replaceAll("\\p{Punct}"," ").split(" ");
                             lineArray = Arrays.asList(lineList);
-                            wordList.addAll(lineArray);
+                            wordList.addAll(lineArray); 
+                        }
+                        
+                        // convert back to string and remove punctuation
+                        // wordList.replaceAll("\\p{Punct}", "");
+                        wordListString = wordList.toString().replaceAll("\\p{Punct}", " ");
+                        wordListArray = wordListString.split(" ");
+
+                        //create hashmap having integer key of String value
+                        for (int i = 0; i<wordListArray.length; i++){
+                            hashmap.put(i, wordListArray[i]);
                         }
 
+                        br.close();
                     }
-
-                    
-
                 }
             }
         }
-
-
-         //read File into words into string[]
-
     }
 }
