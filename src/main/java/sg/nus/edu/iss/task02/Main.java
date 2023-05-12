@@ -19,8 +19,14 @@ public class Main {
         /*add directory texts inside task02
          - program has to run with argument so check arg length
          - check directory exists
-         - FileReader >> bufferedReader >> readlines >> split and replace punctation, lowercase all
-         - create hashmap of lists? or hashmap of hashmap
+         - FileReader >> bufferedReader >> readlines >> split and replace punctation, lowercase all'
+         - create hashmap of hashmap outside of the directory and file loops
+         - inside the loop, .put inner hashmap 
+           --> if outer hashmap key string[i] and inner hashmap key [i+1] does not exist yet, assign inner hashmap value counter 1
+           --> if exists, get inner hashmap and add 1 to counter
+           --> from hashmap, loop through and get inner hashmap value counts 
+           --> for each outer hashmap key, add the values and divide by total to get probability. all probabilities add up ==1
+        - 
          */
 
         String dirName = "";
@@ -71,9 +77,13 @@ public class Main {
                         // create hashmap of a hashmap (of the next word and count)
                         for (int i = 0; i<wordListArray.length-1; i++){
                             int count =0;
-                            if (wordNextWordCount.containsKey(wordListArray[i])){
-                            count++;
-                            NextWordCount.put(wordListArray[i+1],count);
+                            if (!wordNextWordCount.containsKey(wordListArray[i])){
+                                // if word doesn't exist yet, put.
+                                NextWordCount.put(wordListArray[i+1],1);
+                            }else{
+                                // else add 1 to existing value of inner map
+                                // count = NextWordCount.get(i+1);   commentting as returning null error
+                                NextWordCount.put(wordListArray[i+1], count+1);
                             }
                             wordNextWordCount.put(wordListArray[i], NextWordCount);
                         }
@@ -83,13 +93,15 @@ public class Main {
                 }
             }
         }
-        for(Map.Entry<String, HashMap<String,Integer>> t :wordNextWordCount.entrySet()){
-            String key = t.getKey();
-            for (Map.Entry<String,Integer> e : t.getValue().entrySet())
-              System.out.println("OuterKey:" + key + " InnerKey: " + e.getKey()+ " VALUE:" +e.getValue());
-          }
+        // loop through hashmap
+
+        // for(Map.Entry<String, HashMap<String,Integer>> t :wordNextWordCount.entrySet()){
+        //     String key = t.getKey();
+        //     for (Map.Entry<String,Integer> e : t.getValue().entrySet())
+        //       System.out.println("OuterKey:" + key + " InnerKey: " + e.getKey()+ " VALUE:" +e.getValue());
+        //   }
 
 
-        System.out.println(wordNextWordCount.toString());
+        // System.out.println(wordNextWordCount.toString());
     }
 }
