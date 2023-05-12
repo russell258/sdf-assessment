@@ -43,21 +43,43 @@ public class Main
             if (!commandInput.equals("exit")){
                 lineInput = Arrays.asList(commandInput.split(" "));
                 
-                //take in number 1 and number 2, trim operator for whitespaces
-                num1 = Double.parseDouble(lineInput.get(0));
-                op = lineInput.get(1).replaceAll(" +", "").charAt(0);
-                System.out.println(op);
-                num2 = Double.parseDouble(lineInput.get(2));
+                //try take in number 1 and number 2, catch
+                try {
+                    num1 = Double.parseDouble(lineInput.get(0));
+                    num2 = Double.parseDouble(lineInput.get(2));
 
-                //check correct operator used
-                if (op == '*' || op=='+' || op=='/' || op== '-'){
+                    //trim operator for whitespaces
+                    op = lineInput.get(1).replaceAll(" +", "").charAt(0);
                     
-                }else{
-                    System.out.println("Likely error at operator. Please use + - * / for your operator. Valid Input Syntax: Number [Space] Operator [Space] Number");
+                    //check correct operator used
+                    switch (op){
+                        // case for Add
+                        case '+':
+                            Calculator.Add(num1,num2); 
+                            break;
+                        
+                        // case for Subtract
+                        case '-':
+                            Calculator.Subtract(num1, num2);
+                            break;
+
+                        // case for Multiply
+                        case '*':
+                            Calculator.Multiply(num1,num2);
+                            break;
+
+                        //case for Divide
+                        case '/':
+                            Calculator.Divide(num1,num2);
+                            break;
+
+                        default:
+                            System.out.println("Likely error at operator. Please use + - * / for your operator. Valid Input Syntax: Number [Space] Operator [Space] Number");
+                    }
+                }catch (NumberFormatException ex){
+                    System.out.println("Likely error at Number. Please use a valid number. Valid Input Syntax: Number [Space] Operator [Space] Number");
                 }
             }
-
-
         }
         
 
