@@ -25,6 +25,7 @@ public class Main
         double num1;
         double num2;
         char op; 
+        double $last;
 
         //Welcome message
         System.out.println("Welcome.");
@@ -43,6 +44,8 @@ public class Main
             if (!commandInput.equals("exit")){
                 lineInput = Arrays.asList(commandInput.split(" "));
                 
+
+
                 //try take in number 1 and number 2, catch
                 try {
                     num1 = Double.parseDouble(lineInput.get(0));
@@ -55,22 +58,22 @@ public class Main
                     switch (op){
                         // case for Add
                         case '+':
-                            Calculator.Add(num1,num2); 
+                            $last = Calculator.Add(num1,num2); 
                             break;
                         
                         // case for Subtract
                         case '-':
-                            Calculator.Subtract(num1, num2);
+                            $last = Calculator.Subtract(num1, num2);
                             break;
 
                         // case for Multiply
                         case '*':
-                            Calculator.Multiply(num1,num2);
+                            $last = Calculator.Multiply(num1,num2);
                             break;
 
                         //case for Divide
                         case '/':
-                            Calculator.Divide(num1,num2);
+                            $last = Calculator.Divide(num1,num2);
                             break;
 
                         default:
