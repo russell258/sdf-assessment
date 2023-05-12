@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Main {
@@ -32,7 +33,7 @@ public class Main {
         
         File newDirectory = new File(dirName);
         
-        HashMap<Integer,String> hashmap = new HashMap<Integer,String>();
+
 
         if (!newDirectory.isDirectory()){
             System.out.println("Directory does not exist. Please run Java program with argument for file directory again");
@@ -41,7 +42,6 @@ public class Main {
 
                 if (directories.isDirectory()){
                     for (File file: directories.listFiles()){
-                        System.out.println(file);
                         FileReader fr = new FileReader(file);
                         BufferedReader br = new BufferedReader(fr);
 
@@ -65,9 +65,20 @@ public class Main {
                         wordListArray = wordListString.split(" ");
 
                         //create hashmap having integer key of String value
+                        HashMap<Integer,String> hashmap = new HashMap<Integer,String>();
                         for (int i = 0; i<wordListArray.length; i++){
                             hashmap.put(i, wordListArray[i]);
                         }
+                        System.out.print(hashmap.size() +"\n");
+
+                        HashSet<String> hashset = new HashSet<>();   
+                        for (int i = 0; i < wordListArray.length; i++){   
+                            // check whether the element is present in the hashset or not. If it is not present in the hashset, add in it.
+                            if(!hashset.contains(wordListArray[i])){
+                                hashset.add(wordListArray[i]);
+                            }
+                        }
+
 
                         br.close();
                     }
