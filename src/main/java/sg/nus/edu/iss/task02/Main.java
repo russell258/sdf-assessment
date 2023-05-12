@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,7 +35,9 @@ public class Main {
         
         File newDirectory = new File(dirName);
         
-
+        //hashmap of hashmap to store word, nextword, and count
+        Map<String, Map<String, Integer>> wordNextWordCount = new HashMap<>();
+        Map<String, Integer> NextWordCount = new HashMap<>();
 
         if (!newDirectory.isDirectory()){
             System.out.println("Directory does not exist. Please run Java program with argument for file directory again");
@@ -66,32 +69,27 @@ public class Main {
                         wordListArray = wordListString.trim().split(" ");
 
                         // create hashmap of a hashmap (of the next word and count)
-                        Map<String, Map<String, Integer>> wordNextWordCount = new HashMap<>();
-                        Map<String, Integer> NextWordCount = new HashMap<>();
-                        int count = 0;
                         for (int i = 0; i<wordListArray.length-1; i++){
-                            // if (wordNextWordCount.containsKey(wordListArray[i])){
-                            //     NextWordCount = new HashMap<>();
+                            int count =0;
                             if (wordNextWordCount.containsKey(wordListArray[i])){
-                                count++;
-                                NextWordCount.put(wordListArray[i+1],count);
+                            count++;
+                            NextWordCount.put(wordListArray[i+1],count);
                             }
                             wordNextWordCount.put(wordListArray[i], NextWordCount);
                         }
                         
-
-                        System.out.println(wordNextWordCount);
-
-                        // for(Map.Entry<String, HashMap<String,Integer>> t :wordNextWordCount.entrySet()){
-                        //     String key = t.getKey();
-                        //     for (Map.Entry<String,Integer> e : t.getValue().entrySet())
-                        //       System.out.println("OuterKey:" + key + " InnerKey: " + e.getKey()+ " VALUE:" +e.getValue());
-                        //   }
-
                         br.close();
                     }
                 }
             }
         }
+        for(Map.Entry<String, HashMap<String,Integer>> t :wordNextWordCount.entrySet()){
+            String key = t.getKey();
+            for (Map.Entry<String,Integer> e : t.getValue().entrySet())
+              System.out.println("OuterKey:" + key + " InnerKey: " + e.getKey()+ " VALUE:" +e.getValue());
+          }
+
+
+        System.out.println(wordNextWordCount.toString());
     }
 }
