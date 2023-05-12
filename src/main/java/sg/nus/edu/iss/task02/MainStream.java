@@ -57,6 +57,7 @@ public class MainStream {
                             .count();
             
                         System.out.printf(">>> single words: %d\n", single);
+                        System.out.println(wordCount.keySet());
                     }
                 }
             }

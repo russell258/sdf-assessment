@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main( String[] args ) throws IOException
@@ -62,23 +63,30 @@ public class Main {
                         // convert back to string and remove punctuation
                         // wordList.replaceAll("\\p{Punct}", "");
                         wordListString = wordList.toString().replaceAll("\\p{Punct}", " ");
-                        wordListArray = wordListString.split(" ");
+                        wordListArray = wordListString.trim().split(" ");
 
-                        //create hashmap having integer key of String value
-                        HashMap<Integer,String> hashmap = new HashMap<Integer,String>();
-                        for (int i = 0; i<wordListArray.length; i++){
-                            hashmap.put(i, wordListArray[i]);
-                        }
-                        System.out.print(hashmap.size() +"\n");
-
-                        HashSet<String> hashset = new HashSet<>();   
-                        for (int i = 0; i < wordListArray.length; i++){   
-                            // check whether the element is present in the hashset or not. If it is not present in the hashset, add in it.
-                            if(!hashset.contains(wordListArray[i])){
-                                hashset.add(wordListArray[i]);
+                        // create hashmap of a hashmap (of the next word and count)
+                        Map<String, Map<String, Integer>> wordNextWordCount = new HashMap<>();
+                        Map<String, Integer> NextWordCount = new HashMap<>();
+                        int count = 0;
+                        for (int i = 0; i<wordListArray.length-1; i++){
+                            // if (wordNextWordCount.containsKey(wordListArray[i])){
+                            //     NextWordCount = new HashMap<>();
+                            if (wordNextWordCount.containsKey(wordListArray[i])){
+                                count++;
+                                NextWordCount.put(wordListArray[i+1],count);
                             }
+                            wordNextWordCount.put(wordListArray[i], NextWordCount);
                         }
+                        
 
+                        System.out.println(wordNextWordCount);
+
+                        // for(Map.Entry<String, HashMap<String,Integer>> t :wordNextWordCount.entrySet()){
+                        //     String key = t.getKey();
+                        //     for (Map.Entry<String,Integer> e : t.getValue().entrySet())
+                        //       System.out.println("OuterKey:" + key + " InnerKey: " + e.getKey()+ " VALUE:" +e.getValue());
+                        //   }
 
                         br.close();
                     }
