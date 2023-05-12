@@ -14,7 +14,11 @@ import java.util.Scanner;
         // Subtract 
         // Divide
         // Multiply
-        // Number can be positive, negative, INTEGER or Decimal
+        // test 3 + 4
+        // test 3+ 4
+        // test 3     ++++++++++++   4
+        // test $last + $last
+        // test 3 + 3 + 3 + 3 (should not return 6, should return error);
 
 public class Main 
 {
@@ -41,57 +45,61 @@ public class Main
             // take in input and remove all extra spaces
             commandInput = scan.nextLine().replaceAll(" +"," ");
 
-            // check is not exit before splitting to arraylist
-            if (!commandInput.equals("exit")){
-                lineInput = Arrays.asList(commandInput.split(" "));
-                
-
-
+            //split lineInput into arraylist
+            lineInput = Arrays.asList(commandInput.split(" "));
+            // check commandInput is not empty and length == 3. If length < 3 or > 3, invalid input.
+            if (!commandInput.equals("exit") && !commandInput.isEmpty() && lineInput.size()==3){
                 //try take in number 1 and number 2, check if is $last, otherwise catch
                 try {
-                    if (lineInput.get(0).equals("$last")){
+                    if (lineInput.get(0).equals("$last".toLowerCase())){
                         num1 = $last;
                     }else{
                         num1 = Double.parseDouble(lineInput.get(0));
                     }
 
-                    if (lineInput.get(2).equals("$last")){
+                    if (lineInput.get(2).equals("$last".toLowerCase())){
                         num2 = $last;
                     }else{
                         num2 = Double.parseDouble(lineInput.get(2));
                     }
 
                     //trim operator for whitespaces
-                    op = lineInput.get(1).replaceAll(" +", "").charAt(0);
-                    
-                    //check correct operator used
-                    switch (op){
-                        // case for Add
-                        case '+':
-                            $last = Calculator.Add(num1,num2); 
-                            break;
-                        
-                        // case for Subtract
-                        case '-':
-                            $last = Calculator.Subtract(num1, num2);
-                            break;
-
-                        // case for Multiply
-                        case '*':
-                            $last = Calculator.Multiply(num1,num2);
-                            break;
-
-                        //case for Divide
-                        case '/':
-                            $last = Calculator.Divide(num1,num2);
-                            break;
-
-                        default:
-                            System.out.println("Likely error at operator. Please use + - * / for your operator. Valid Input Syntax: Number [Space] Operator [Space] Number");
+                    String operator = lineInput.get(1).replaceAll(" +", "");
+                    // check valid input, invalidate  ++++ ----- *** //// or +-*/ used together
+                    if (operator.length()==1){
+                        op = operator.charAt(0);
+                        switch (op){
+                            // case for Add
+                            case '+':
+                                $last = Calculator.Add(num1,num2); 
+                                break;
+                            
+                            // case for Subtract
+                            case '-':
+                                $last = Calculator.Subtract(num1, num2);
+                                break;
+    
+                            // case for Multiply
+                            case '*':
+                                $last = Calculator.Multiply(num1,num2);
+                                break;
+    
+                            //case for Divide
+                            case '/':
+                                $last = Calculator.Divide(num1,num2);
+                                break;
+    
+                            default:
+                                System.out.println("Likely error at operator. Please use + - * / for your operator. Valid Input Syntax: Number [Space] Operator [Space] Number");
+                        }
+                    }else{
+                        System.out.println("Likely error at operator. Please use only 1 character, + - * / for your operator.");
                     }
                 }catch (NumberFormatException ex){
                     System.out.println("Likely error at Number. Please use a valid number. Valid Input Syntax: Number [Space] Operator [Space] Number");
                 }
+            }else{
+                System.out.println("Invalid input. Please ensure only 2 numbers and single space between each number and oeprator. Valid Input Syntax: Number [Space] Operator [Space] Number");
             }
         }
         
