@@ -48,7 +48,7 @@ public class Main
 
             //split lineInput into arraylist
             lineInput = Arrays.asList(commandInput.split(" "));
-            //check commandInput not exit, otherwise will get the else errors inside
+            //check commandInput not exit, to not flag out lineInput size error when exiting.
             if (!commandInput.equals("exit")){
                // check lineInput length is 3, else return error
                 if (lineInput.size()==3){
