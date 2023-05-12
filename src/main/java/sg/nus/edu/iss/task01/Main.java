@@ -25,7 +25,8 @@ public class Main
         double num1;
         double num2;
         char op; 
-        double $last;
+        // assign 0 for first value
+        double $last = 0;
 
         //Welcome message
         System.out.println("Welcome.");
@@ -46,10 +47,19 @@ public class Main
                 
 
 
-                //try take in number 1 and number 2, catch
+                //try take in number 1 and number 2, check if is $last, otherwise catch
                 try {
-                    num1 = Double.parseDouble(lineInput.get(0));
-                    num2 = Double.parseDouble(lineInput.get(2));
+                    if (lineInput.get(0).equals("$last")){
+                        num1 = $last;
+                    }else{
+                        num1 = Double.parseDouble(lineInput.get(0));
+                    }
+
+                    if (lineInput.get(2).equals("$last")){
+                        num2 = $last;
+                    }else{
+                        num2 = Double.parseDouble(lineInput.get(2));
+                    }
 
                     //trim operator for whitespaces
                     op = lineInput.get(1).replaceAll(" +", "").charAt(0);
